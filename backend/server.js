@@ -9,8 +9,12 @@ import { UserModel } from "./models/UserModel.js";
 const app = express();
 
 //add CORS middleware
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+//   credentials: true
+// }));
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
@@ -25,7 +29,8 @@ app.use('/user-api',userRoute);
 async function connectDBAndStartServer(){
     try{
         //connect to db
-        await connect("mongodb://localhost:27017/tododb");
+        // await connect("mongodb://localhost:27017/tododb");
+        await connect(process.env.MONGO_URI);
     } catch(err){
         console.log(err);
     }
@@ -39,11 +44,14 @@ catch(err){
 }
 
 //start  HTTP Server
-app.listen(8000,()=>{
+// app.listen(8000,()=>{
+//     console.log("Server is connected to port 8000");
+// })
+app.listen(process.env.PORT || 8000, () => {
     console.log("Server is connected to port 8000");
-})
+});
 app.get("/refresh",verifyToken,async(req,res)=>{
     console.log("user is",req.user)
     let userObj=await UserModel.findOne({email:req.user.email})
-    res.status(200).jsono({message:"user",payload:userObj})
+    res.status(200).json({message:"user",payload:userObj})
 })
