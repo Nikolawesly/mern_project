@@ -25,7 +25,7 @@ function TaskList() {
   const saveModifiedTask = async (modifiedTask) => {
     try {
       let res = await axios.put(
-        `http://localhost:8000/user-api/edit-todo/userid/${currentUser._id}/taskid/${taskBeingEdited._id}`,
+        `${import.meta.env.VITE_API_URL}/user-api/edit-todo/userid/${currentUser._id}/taskid/${taskBeingEdited._id}`,
         modifiedTask,
         { withCredentials: true }
       );
@@ -50,7 +50,7 @@ function TaskList() {
   const setTaskCompleted = async (taskid) => {
     try {
       let res = await axios.put(
-        `http://localhost:8000/user-api/edit-status/userid/${currentUser._id}/taskid/${taskid}`,
+        `${import.meta.env.VITE_API_URL}/user-api/edit-status/userid/${currentUser._id}/taskid/${taskid}`,
         null,
         { withCredentials: true }
       );
@@ -72,7 +72,7 @@ function TaskList() {
   //delete a task
   const deleteTask = async (taskid) => {
     try {
-      let res = await axios.put(`http://localhost:8000/user-api/delete-todo/userid/${currentUser._id}/taskid/${taskid}`, null, { withCredentials: true });
+      let res = await axios.put(`${import.meta.env.VITE_API_URL}/user-api/delete-todo/userid/${currentUser._id}/taskid/${taskid}`, null, { withCredentials: true });
       if (res.status === 200) {
         setCurrentUser(res.data.payload);
       }

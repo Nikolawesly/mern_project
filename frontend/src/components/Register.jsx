@@ -21,8 +21,13 @@ function Register() {
     console.log(newUser);
     try {
       //Make HTTP POST req to create new User in Backend
-      let res = await axios.post("http://localhost:8000/user-api/user", newUser);
-      console.log("res is ", res);
+      // let res = await axios.post("http://localhost:8000/user-api/user", newUser);
+      // console.log("res is ", res);
+      let res = await axios.post(
+  `${import.meta.env.VITE_API_URL}/user-api/user`,
+  newUser
+);
+console.log("res is ", res);
       //if resource is created
       if (res.status === 201) {
         setRegisterSuccess("Registration successful! Please login.");

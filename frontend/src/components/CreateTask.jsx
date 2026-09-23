@@ -15,16 +15,33 @@ function CreateTask() {
 
   const onSubmitNewtask = async (newTask) => {
     console.log(newTask);
+    // try {
+    //   let res = await axios.put(`http://localhost:8000/user-api/todo/${currentUser._id}`, newTask, {
+    //     withCredentials: true,
+    //   });
+    //   console.log("res is ", res);
+    //   if (res.data.message === 'todo added') {
+    //     setCurrentUser(res.data.payload);
+    //     reset(); // Clear form after successful submission
+    //   }
+    // }
     try {
-      let res = await axios.put(`http://localhost:8000/user-api/todo/${currentUser._id}`, newTask, {
-        withCredentials: true,
-      });
-      console.log("res is ", res);
-      if (res.data.message === 'todo added') {
-        setCurrentUser(res.data.payload);
-        reset(); // Clear form after successful submission
-      }
-    } catch (err) {
+  let res = await axios.put(
+    `${import.meta.env.VITE_API_URL}/user-api/todo/${currentUser._id}`,
+    newTask,
+    {
+      withCredentials: true,
+    }
+  );
+
+  console.log("res is ", res);
+
+  if (res.data.message === 'todo added') {
+    setCurrentUser(res.data.payload);
+    reset();
+  }
+}
+    catch (err) {
       // Handle offline mode
       if (!err.response) {
         const newTaskWithId = {

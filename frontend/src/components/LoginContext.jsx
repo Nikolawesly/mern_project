@@ -28,9 +28,13 @@ function LoginContext({ children }) {
   //user login
   const userLogin = async (userCredObj) => {
     try {
-      let res = await axios.post("http://localhost:8000/user-api/login", userCredObj, {
-        withCredentials: true
-      });
+      // let res = await axios.post("http://localhost:8000/user-api/login", userCredObj, {
+      //   withCredentials: true
+      // }
+      let res = await axios.post(`${import.meta.env.VITE_API_URL}/user-api/login`,userCredObj,
+  {
+    withCredentials: true
+  });
       //if login success
       if (res.status === 200) {
         //update the user
@@ -75,7 +79,12 @@ function LoginContext({ children }) {
   //user logout
   const userLogout = async () => {
     try {
-      let res = await axios.get("http://localhost:8000/user-api/logout", { withCredentials: true });
+      // let res = await axios.get("http://localhost:8000/user-api/logout", { withCredentials: true }
+      let res = await axios.get(
+  `${import.meta.env.VITE_API_URL}/user-api/logout`,
+  {
+    withCredentials: true
+  });
       if (res.status === 200) {
         setLoginStatus(false);
         setCurrentUser(null);
